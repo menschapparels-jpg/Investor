@@ -3397,7 +3397,14 @@ PAGES['money/pnl']=()=>{const f=FIN(),v=get('pnlv','rec');
  const ue={cm2:Math.round(u.c), cm1:Math.round(u.netOfGst-a.landed), net:Math.round(u.netOfGst),
    mpo:Math.round(a.mkt1*12/f.ord[0]), cac:Math.round(a.mkt1*12/UE_CUST),
    opc:f.ord[0]/UE_CUST, fixed:(f.op[0].v[0]+f.op[2].v[0]+f.op[3].v[0]+f.op[10].v[0])/12+a.mkt1};
- ue.cm3=ue.cm2-ue.mpo; ue.ltv=Math.round(ue.opc*u.c); ue.be=Math.ceil(ue.fixed/u.c);
+ ue.cm3=ue.cm2-ue.mpo; ue.ltv=Math.round(ue.opc*u.c);
+ /* Company-wide basis: blends marketplace mix and the full return deduction */
+ const varSell=f.op.filter(l=>!l.fx).reduce((s,l)=>s+l.v[0],0);
+ const cmCo=f.gp[0]-varSell;                      // contribution, company, Year 1
+ ue.cmB=Math.round(cmCo/f.ord[0]);                // blended contribution per order
+ ue.cm3Co=cmCo-f.op[1].v[0];                      // after the full marketing budget
+ ue.fixCo=f.op.filter(l=>l.fx&&l!==f.op[1]).reduce((s,l)=>s+l.v[0],0);
+ ue.be=Math.ceil(ue.fixed/(cmCo/f.ord[0]));
  const C=x=>x<0?`<span class="neg">−${cr(-x,2)}</span>`:cr(x,2);
  return `
 ${blkHead('Three-year profit and loss')}
@@ -3452,7 +3459,7 @@ ${v==='br'?`
  </tbody></table></div></div>
 ${v==='rec'?`<div class="note" style="margin-top:.875rem">Built from orders × average order value — the same basis the source model uses month by month. Each operating line carries its derivation rule; open <b>Difference</b> to see every departure from the published version.</div>
 
-${blkHead('One order, traced','Own website')}
+${blkHead('One order, traced','A direct order on our own site · ₹'+grp(a.asp)+' list')}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Line</th><th data-n>Amount</th><th data-n>Running</th><th data-n>% of net</th></tr></thead>
  <tbody>${(()=>{let run=0;const out=[];
@@ -3475,6 +3482,7 @@ ${blkHead('One order, traced','Own website')}
     <td data-n class="fig"><b>${(ue.cm3/u.netOfGst*100).toFixed(1)}%</b></td></tr>`);
   return out.join('')})()}
  </tbody></table></div></div>
+<div class="note" style="margin-top:.875rem">A direct order at list price. The profit and loss above blends this with marketplace, which carries commission, and runs on a blended average order value of ₹${grp(Math.round(f.aov[0]))} across all channels.</div>
 
 ${blkHead('The unit metrics','Year 1')}
 <div class="panel"><div class="p-body flush"><table class="t">
@@ -3490,12 +3498,13 @@ ${blkHead('The unit metrics','Year 1')}
   ['Orders per customer',ue.opc.toFixed(2),grp(f.ord[0])+' ÷ '+grp(UE_CUST)],
   ['Lifetime value, Year 1','₹'+grp(ue.ltv),ue.opc.toFixed(2)+' orders × ₹'+grp(ue.cm2)+' contribution'],
   ['LTV : CAC',(ue.ltv/ue.cac).toFixed(1)+'×','₹'+grp(ue.ltv)+' ÷ ₹'+grp(ue.cac)],
-  ['Break-even',grp(ue.be)+' orders a month','Fixed cost ₹'+grp(Math.round(ue.fixed))+' ÷ ₹'+grp(ue.cm2)]
+  ['Blended contribution per order','₹'+grp(ue.cmB),'Company-wide — carries the marketplace commission and the '+f.ret[0]+'% return deduction'],
+  ['Break-even',grp(ue.be)+' orders a month','Fixed cost ₹'+grp(Math.round(ue.fixed))+' ÷ ₹'+grp(ue.cmB)+' blended contribution']
  ].map(r=>`<tr><td class="semi">${esc(r[0])}</td>
   <td data-n class="fig">${r[1]}</td>
   <td class="t-label muted">${r[2]}</td></tr>`).join('')}
  </tbody></table></div></div>
-<div class="note" style="margin-top:.875rem">Contribution is positive at every stage, including after marketing. The Year 1 EBITDA loss is a timing outcome, not a unit one: ${cr(a.mkt1*12,2)} of marketing buys the customer base that Year 2 sells to at close to zero acquisition cost, which is why EBITDA turns ${cr(f.ebitda[1],2)} positive in Year 2 on the same monthly spend.</div>`:
+<div class="note" style="margin-top:.875rem"><b>Contribution survives the marketing budget.</b> Year 1 generates ${cr(cmCo,2)} of contribution and spends ${cr(f.op[1].v[0],2)} on marketing, leaving ${cr(ue.cm3Co,2)}. The ${cr(f.ebitda[0],2)} EBITDA is the fixed base beneath it — salaries, rent, technology and admin at ${cr(ue.fixCo,2)} — which first-year volume does not yet cover: break-even needs ${grp(ue.be)} orders a month against the ${grp(Math.round(f.ord[0]/12))} budgeted. Year 2 carries the same fixed base across ${grp(f.ord[1])} orders and turns ${cr(f.ebitda[1],2)} positive on unchanged monthly marketing.</div>`:
  `<div class="note w" style="margin-top:.875rem">The source model as written. It contains a ₹16.32 L salary double-count, a ₹19.2 L duplicated creative line, and total opex that no combination of disclosed lines reproduces. Shown for comparison only.</div>`}`}`};
 
 /* ═══ MONEY — remaining pages ════════════════════════════════════════════ */
