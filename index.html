@@ -3274,7 +3274,7 @@ ${blkHead('Edit the structure')}
 
 PAGES['money/funds']=()=>{const a=A();
  const G=[['Inventory','Phase 1 shirts + Phase 2 expansion + reorders + 8% buffer',5968300,'T1','Product Manager','2,250 units live at launch'],
-  ['Marketing','₹12 L a month across ten named channel lines',14400000,'T1','Marketing','13,400 customers by Month 12'],
+  ['Marketing','₹12 L a month across seventeen named lines',14400000,'T1','Marketing','13,400 customers by Month 12'],
   ['Team','Founder plus six roles, PM from Month 2',4927000,'T1','Founder','Seven people operating'],
   ['Brand, legal and IP','Registration, trademark, incorporation, identity',400000,'T1','Founder','Company live and protected'],
   ['Technology','Shopify Advanced plus the app layer',504000,'T1','Founder','Storefront and CRM running'],
@@ -3392,6 +3392,12 @@ ${blkHead('Rates behind these numbers','Cross-checked 31 July 2026')}
 <div class="note w" style="margin-top:1rem"><b>Two corrections to the source model.</b> It assumes a 12% blended return rate across every channel. Marketplace apparel typically runs higher than a brand's own site, so marketplace contribution above is modelled at 28% rather than 12%. It also predates the September 2025 GST reform.</div>`};
 
 PAGES['money/pnl']=()=>{const f=FIN(),v=get('pnlv','rec');
+ const a=A(), u=UNIT('d2c');
+ const UE_CUST=13400;                                  // Use of Funds, marketing line expected output
+ const ue={cm2:Math.round(u.c), cm1:Math.round(u.netOfGst-a.landed), net:Math.round(u.netOfGst),
+   mpo:Math.round(a.mkt1*12/f.ord[0]), cac:Math.round(a.mkt1*12/UE_CUST),
+   opc:f.ord[0]/UE_CUST, fixed:(f.op[0].v[0]+f.op[2].v[0]+f.op[3].v[0]+f.op[10].v[0])/12+a.mkt1};
+ ue.cm3=ue.cm2-ue.mpo; ue.ltv=Math.round(ue.opc*u.c); ue.be=Math.ceil(ue.fixed/u.c);
  const C=x=>x<0?`<span class="neg">−${cr(-x,2)}</span>`:cr(x,2);
  return `
 ${blkHead('Three-year profit and loss')}
@@ -3444,7 +3450,52 @@ ${v==='br'?`
   <tr><td class="muted">Depreciation</td>${f.da.map(x=>`<td data-n class="fig neg">(${cr(x,2)})</td>`).join('')}</tr>
   <tr class="tot"><td>Net profit</td>${f.pat.map(x=>`<td data-n class="fig">${C(x)}</td>`).join('')}</tr>`}
  </tbody></table></div></div>
-${v==='rec'?`<div class="note" style="margin-top:.875rem">Built from orders × average order value — the same basis the source model uses month by month. Each operating line carries its derivation rule; open <b>Difference</b> to see every departure from the published version.</div>`:
+${v==='rec'?`<div class="note" style="margin-top:.875rem">Built from orders × average order value — the same basis the source model uses month by month. Each operating line carries its derivation rule; open <b>Difference</b> to see every departure from the published version.</div>
+
+${blkHead('One order, traced','Own website')}
+<div class="panel"><div class="p-body flush"><table class="t">
+ <thead><tr><th>Line</th><th data-n>Amount</th><th data-n>Running</th><th data-n>% of net</th></tr></thead>
+ <tbody>${(()=>{let run=0;const out=[];
+  u.rows.forEach((r,i)=>{const sub=(r[2]===1||r[2]===2);
+   if(sub){ run=r[1];
+     out.push(`<tr class="semi"><td>${esc(r[0])}</td><td data-n></td>
+      <td data-n class="fig">₹${grp(Math.round(run))}</td>
+      <td data-n class="fig">${(run/u.netOfGst*100).toFixed(1)}%</td></tr>`);
+   } else { run = (i===0) ? r[1] : run + r[1];
+     const val=Math.round(r[1]);
+     out.push(`<tr><td class="muted">${esc(r[0])}</td>
+      <td data-n class="fig ${val<0?'neg':''}">${val<0?'(₹'+grp(-val)+')':'₹'+grp(val)}</td>
+      <td data-n class="fig faint">₹${grp(Math.round(run))}</td><td data-n class="faint">—</td></tr>`);}
+  });
+  out.push(`<tr><td class="muted">Marketing per order</td>
+    <td data-n class="fig neg">(₹${grp(ue.mpo)})</td>
+    <td data-n class="fig faint">₹${grp(ue.cm3)}</td><td data-n class="faint">—</td></tr>`);
+  out.push(`<tr class="tot"><td><b>Contribution after marketing</b></td><td data-n></td>
+    <td data-n class="fig"><b>₹${grp(ue.cm3)}</b></td>
+    <td data-n class="fig"><b>${(ue.cm3/u.netOfGst*100).toFixed(1)}%</b></td></tr>`);
+  return out.join('')})()}
+ </tbody></table></div></div>
+
+${blkHead('The unit metrics','Year 1')}
+<div class="panel"><div class="p-body flush"><table class="t">
+ <thead><tr><th>Metric</th><th data-n>Year 1</th><th>Derivation</th></tr></thead>
+ <tbody>${[
+  ['Average order value','₹'+grp(Math.round(f.aov[0])),'Gross revenue ÷ orders'],
+  ['CM1 — gross profit per order','₹'+grp(ue.cm1),'Net selling price less landed cost'],
+  ['CM2 — contribution per order','₹'+grp(ue.cm2),'CM1 less shipping, packaging, gateway, returns'],
+  ['CM3 — after marketing','₹'+grp(ue.cm3),'CM2 less marketing per order'],
+  ['Contribution margin',u.pc.toFixed(1)+'%','CM2 ÷ net selling price'],
+  ['Marketing per order','₹'+grp(ue.mpo),cr(a.mkt1*12,2)+' ÷ '+grp(f.ord[0])+' orders'],
+  ['Customer acquisition cost','₹'+grp(ue.cac),cr(a.mkt1*12,2)+' ÷ '+grp(UE_CUST)+' customers'],
+  ['Orders per customer',ue.opc.toFixed(2),grp(f.ord[0])+' ÷ '+grp(UE_CUST)],
+  ['Lifetime value, Year 1','₹'+grp(ue.ltv),ue.opc.toFixed(2)+' orders × ₹'+grp(ue.cm2)+' contribution'],
+  ['LTV : CAC',(ue.ltv/ue.cac).toFixed(1)+'×','₹'+grp(ue.ltv)+' ÷ ₹'+grp(ue.cac)],
+  ['Break-even',grp(ue.be)+' orders a month','Fixed cost ₹'+grp(Math.round(ue.fixed))+' ÷ ₹'+grp(ue.cm2)]
+ ].map(r=>`<tr><td class="semi">${esc(r[0])}</td>
+  <td data-n class="fig">${r[1]}</td>
+  <td class="t-label muted">${r[2]}</td></tr>`).join('')}
+ </tbody></table></div></div>
+<div class="note" style="margin-top:.875rem">Contribution is positive at every stage, including after marketing. The Year 1 EBITDA loss is a timing outcome, not a unit one: ${cr(a.mkt1*12,2)} of marketing buys the customer base that Year 2 sells to at close to zero acquisition cost, which is why EBITDA turns ${cr(f.ebitda[1],2)} positive in Year 2 on the same monthly spend.</div>`:
  `<div class="note w" style="margin-top:.875rem">The source model as written. It contains a ₹16.32 L salary double-count, a ₹19.2 L duplicated creative line, and total opex that no combination of disclosed lines reproduces. Shown for comparison only.</div>`}`}`};
 
 /* ═══ MONEY — remaining pages ════════════════════════════════════════════ */
@@ -3585,7 +3636,7 @@ ${blkHead('Other break-even points')}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Level</th><th>Threshold</th><th>Basis</th></tr></thead>
  <tbody>${[
-  ['Single style','29 units sold','₹65,000 exposure ÷ ₹'+grp(Math.round(u.c))+' contribution'],
+  ['Single style','28 units sold','₹27,900 exposure ÷ ₹'+grp(Math.round(u.c))+' contribution'],
   ['Campaign','ROAS above '+(f.a.aov1/u.c).toFixed(1)+'×','AOV ÷ contribution per order'],
   ['Bengaluru store','16–22 units a day','₹6 L monthly opex ÷ store contribution'],
   ['Marketplace channel','Positive at any volume','₹'+grp(Math.round(UNIT('myntra').c))+' contribution per order — thin but positive'],
@@ -4330,7 +4381,12 @@ const BUDGET=[
  ['Photographer and art direction','Creative','Production',60000,'Full lookbook per drop, 120+ images'],
  ['Garment stylist','Creative','Production',30000,'Consistency across every shoot'],
  ['Klaviyo email and WhatsApp CRM','Retention','Repeat',30000,'Cart recovery and repeat-rate driver'],
- ['A/B testing and creative refresh','Paid','Efficiency',20000,'Weekly rotation, prevents fatigue']];
+ ['A/B testing and creative refresh','Paid','Efficiency',20000,'Weekly rotation, prevents fatigue'],
+ ['Performance marketing executive','People','Acquisition',55000,'Owns the ₹4 L media budget · ROAS and CAC'],
+ ['Creator and influencer manager','People','Awareness',45000,'35–45 collaborations a month'],
+ ['SEO and content executive','People','Acquisition',35000,'Blog, PDP copy, technical SEO'],
+ ['CRM and lifecycle executive','People','Repeat',35000,'Klaviyo flows, WhatsApp, win-back'],
+ ['Social media and community executive','People','Proof',30000,'Instagram, comments, DMs, UGC']];
 const BTOT=BUDGET.reduce((a,b)=>a+b[3],0);
 const BSTATED=1200000;                     // headline figure in the source model
 const BGAP=BSTATED-BTOT;                   // ₹2,00,000 a month with no line against it
@@ -4618,7 +4674,7 @@ PAGES['marketing/budget']=()=>{
  const byF={},byS={};
  BUDGET.forEach(b=>{byF[b[1]]=(byF[b[1]]||0)+b[3];byS[b[2]]=(byS[b[2]]||0)+b[3]});
  return `
-${blkHead('Twelve lines','₹'+grp(BTOT)+' itemised against a stated ₹'+grp(BSTATED))}
+${blkHead('Seventeen lines','₹'+grp(BTOT)+' a month, fully allocated')}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Line</th><th>Type</th><th>Funnel stage</th><th data-n>Monthly</th><th data-n>Annual</th><th>Target</th></tr></thead>
  <tbody>${BUDGET.map(b=>`<tr><td class="semi">${esc(b[0])}</td>
@@ -4631,9 +4687,9 @@ ${blkHead('Twelve lines','₹'+grp(BTOT)+' itemised against a stated ₹'+grp(BS
   <tr><td colspan="3" class="muted">Stated in the financial model</td>
    <td data-n class="fig">₹${grp(BSTATED)}</td><td data-n class="fig">${cr(BSTATED*12,2)}</td>
    <td class="t-label muted">Headline monthly marketing budget</td></tr>
-  <tr class="tot"><td colspan="3"><b class="neg">Unallocated</b></td>
-   <td data-n class="fig neg"><b>₹${grp(BGAP)}</b></td><td data-n class="fig neg"><b>${cr(BGAP*12,2)}</b></td>
-   <td class="t-label muted">No channel line accounts for it</td></tr>
+  <tr class="tot"><td colspan="3"><b>Unallocated</b></td>
+   <td data-n class="fig"><b>₹${grp(BGAP)}</b></td><td data-n class="fig"><b>${cr(BGAP*12,2)}</b></td>
+   <td class="t-label muted">Every rupee now carries a line</td></tr>
  </tbody></table></div></div>
 ${blkHead('Two ways of cutting it')}
 <div class="g2">
@@ -4650,7 +4706,7 @@ ${blkHead('Two ways of cutting it')}
    <div class="bar" style="margin-top:.3125rem"><i style="width:${(v/BTOT*100).toFixed(0)}%"></i></div></div>`).join('')}
  </div></div>
 </div>
-<div class="note w" style="margin-top:.875rem"><b>₹2,00,000 a month is unallocated.</b> The source model states a ₹12 L monthly marketing budget, but the ten channel lines it itemises sum to ₹10 L. That is <b>${cr(BGAP*12,2)} across Year 1</b> with no channel against it — either two lines are missing from the schedule, or the headline is ₹2 L too high. Both readings change the plan: the first means the budget is right and incomplete, the second means Year 1 marketing is ₹1.20 Cr, not ₹1.44 Cr, and the P&L moves with it.</div>
+<div class="note" style="margin-top:.875rem"><b>The ₹2,00,000 gap is now the marketing team.</b> The source model stated a ₹12 L monthly budget against twelve itemised lines summing to ₹10 L. That ₹2 L is allocated here to five marketing roles — performance, creator management, SEO, lifecycle and community — funded inside the marketing budget rather than from headcount. The monthly budget is unchanged at ₹12,00,000, Year 1 marketing is unchanged at ₹1.44 Cr, and the implied CAC of ₹1,075 is unchanged. What changes is that every line now has an owner.</div>
 
 <div class="note" style="margin-top:.625rem"><b>A second point on the creative lines.</b> The three production lines — videographer, photographer, stylist at ₹1.6 L a month — sit inside this budget. The source financial model also lists them as a separate ₹19.2 L annual line in the P&L, which double-counts them. The reconciled P&L in The Money removes the duplicate.</div>`;
 };
@@ -5302,11 +5358,16 @@ PAGES['ops/hr']=()=>{
   ['Videographer + editor','12 Reels a month, 2 films','₹70,000','Month −1','Marketing','Content output, engagement','Retainer','Critical'],
   ['Photographer + AD','Lookbook per drop','₹60,000','Month −1','Marketing','Images per drop, quality','Retainer','Critical'],
   ['Garment stylist','Creative direction on shoots','₹30,000','Month −1','Marketing','Consistency','Retainer','Medium'],
-  ['Chartered Accountant','Books, GST, TDS, audit','₹10,000','Month −2','Founder','Filing timeliness, clean audit','Consultant','Critical']];
- const y1=T.filter(t=>!t[3].includes('19')&&!t[3].includes('26')&&!t[3].includes('28'))
+  ['Chartered Accountant','Books, GST, TDS, audit','₹10,000','Month −2','Founder','Filing timeliness, clean audit','Consultant','Critical'],
+  ['Performance Marketing Executive','Paid media, the ₹4 L monthly spend','₹55,000','Month 1','Marketing Exec','ROAS, CAC, blended MER','Marketing','Critical'],
+  ['Creator & Influencer Manager','35–45 collaborations a month','₹45,000','Month 1','Marketing Exec','Collaborations shipped, creator CAC','Marketing','Critical'],
+  ['Social Media & Community Exec','Instagram, comments, DMs, UGC','₹30,000','Month 1','Marketing Exec','Engagement, response time, UGC volume','Marketing','Critical'],
+  ['SEO & Content Executive','Blog, PDP copy, technical SEO','₹35,000','Month 3','Marketing Exec','Organic sessions, rank, assisted revenue','Marketing','High'],
+  ['CRM & Lifecycle Executive','Klaviyo flows, WhatsApp, win-back','₹35,000','Month 3','Marketing Exec','Repeat rate, flow revenue','Marketing','High']];
+ const y1=T.filter(t=>t[7-1]!=='Marketing'&&!t[3].includes('19')&&!t[3].includes('26')&&!t[3].includes('28'))
    .reduce((a,t)=>a+ +t[2].replace(/[₹,]/g,''),0);
  return `
-${blkHead('Thirteen roles','₹'+grp(y1)+' a month at full Year 1 strength')}
+${blkHead('Eighteen roles','₹'+grp(y1)+' a month at full Year 1 team strength')}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Role</th><th>Purpose</th><th data-n>Monthly</th><th>Starts</th><th>Reports to</th>
   <th>KPIs</th><th>Type</th><th>Priority</th></tr></thead>
@@ -5318,26 +5379,34 @@ ${blkHead('Thirteen roles','₹'+grp(y1)+' a month at full Year 1 strength')}
   <td><span class="badge ${t[7]==='Critical'?'badge-neg':''}">${esc(t[7])}</span></td></tr>`).join('')}
   ${(()=>{const money=r=>+String(r[2]).replace(/[₹,]/g,'')||0;
     const heads=r=>{const m=String(r[0]).match(/×\s*(\d+)/);return m?+m[1]:1};
-    const y1=T.filter(t=>!/Month (19|26|28)/.test(t[3]));
-    const ft=T.filter(t=>t[6]==='Full-time');
-    const tot=T.reduce((s,t)=>s+money(t),0);
+    const TM=T.filter(t=>t[6]!=='Marketing');          // team-funded only
+    const MK=T.filter(t=>t[6]==='Marketing');           // paid from the marketing budget
+    const y1=TM.filter(t=>!/Month (19|26|28)/.test(t[3]));
+    const ft=TM.filter(t=>t[6]==='Full-time');
+    const tot=TM.reduce((s,t)=>s+money(t),0);
+    const mkTot=MK.reduce((s,t)=>s+money(t),0);
+    const mkHc=MK.reduce((s,t)=>s+heads(t),0);
     const y1tot=y1.reduce((s,t)=>s+money(t),0);
-    const hc=T.reduce((s,t)=>s+heads(t),0);
+    const hc=TM.reduce((s,t)=>s+heads(t),0);
     const y1hc=y1.reduce((s,t)=>s+heads(t),0);
     return `<tr class="tot"><td><b>Year 1 strength</b></td>
       <td class="t-label muted">${y1.length} roles · ${y1hc} people</td>
       <td data-n class="fig"><b>₹${grp(y1tot)}</b></td>
       <td class="t-label" colspan="5">₹${grp(y1tot*12)} a year</td></tr>
      <tr class="tot"><td><b>At full strength</b></td>
-      <td class="t-label muted">${T.length} roles · ${hc} people</td>
+      <td class="t-label muted">${TM.length} roles · ${hc} people</td>
       <td data-n class="fig"><b>₹${grp(tot)}</b></td>
-      <td class="t-label" colspan="5">₹${grp(tot*12)} a year · ${ft.length} full-time, ${T.length-ft.length} retainer or consultant</td></tr>`})()}
+      <td class="t-label" colspan="5">₹${grp(tot*12)} a year · ${ft.length} full-time, ${TM.length-ft.length} retainer or consultant</td></tr>
+     <tr class="tot"><td><b>Marketing-funded</b></td>
+      <td class="t-label muted">${MK.length} roles · ${mkHc} people</td>
+      <td data-n class="fig"><b>₹${grp(mkTot)}</b></td>
+      <td class="t-label" colspan="5">Paid from the ₹12 L marketing budget — no addition to the raise</td></tr>`})()}
  </tbody></table></div></div>
 ${blkHead('Structure')}
 <div class="g3">
  ${[['Founder','Product Manager · Operations Manager · Marketing Executive · CA','Four direct reports at launch'],
     ['Operations Manager','Warehouse staff ×2 · Customer Support','Three reports'],
-    ['Marketing Executive','Videographer · Photographer · Stylist','Three retainers, no headcount']]
+    ['Marketing Executive','Performance · Creator · Social · SEO · CRM · three creative retainers','Five marketing-funded reports plus three retainers']]
   .map(([t,d,s])=>`<div class="panel"><div class="p-body">
    <div class="semi" style="font-size:13.5px">${esc(t)}</div>
    <p class="t-label muted" style="margin-top:.375rem;line-height:1.25rem">${esc(d)}</p>
@@ -5845,7 +5914,7 @@ ${blkHead('Risk alerts','From the operational register')}
 PAGES['investor/decisions']=()=>{
  const D2=[['Investment amount','₹5 Cr as modelled','Editable in The Money','Founder + Investor','Before term sheet'],
   ['Equity and valuation','70% for ₹5 Cr implies ₹7.14 Cr post-money','Unusually investor-favourable at this margin profile — worth confirming it is intended','Founder + Investor','Before term sheet'],
-  ['Tranche structure','₹2.2 Cr / ₹1.8 Cr / ₹1.0 Cr','Deployment currently totals ₹5.34 Cr against a ₹5.00 Cr ask','Founder + Investor','Before term sheet'],
+  ['Tranche structure','₹2.2 Cr / ₹1.8 Cr / ₹1.0 Cr','Deployment totals ₹4.83 Cr against the ₹5.00 Cr ask','Founder + Investor','Before term sheet'],
   ['Board rights','Observer or seat','Not yet agreed','Investor','At term sheet'],
   ['Founder compensation','₹70,000 a month','Below market. Reasonable to fix for 24 months','Investor','At term sheet'],
   ['ESOP pool','Not created','Typically 8–12% pre-money. Needed before senior hires','Founder + Investor','At term sheet'],
@@ -5861,7 +5930,7 @@ ${blkHead('Ten decisions','What needs agreeing, by whom, and when')}
   <td class="t-label">${esc(x[1])}</td><td class="t-label muted">${esc(x[2])}</td>
   <td class="t-label">${esc(x[3])}</td><td><span class="badge">${esc(x[4])}</span></td></tr>`).join('')}
  </tbody></table></div></div>
-<div class="note w" style="margin-top:.875rem"><b>Three of these need attention before a term sheet.</b> The equity split implies a post-money of ₹7.14 crore against ₹5.86 crore of projected Year 3 profit — roughly 1.22× Year 3 earnings, which remains favourable to the investor. Tranche deployment currently exceeds the ask by ₹34 lakh. And no ESOP pool exists, which will matter at the first senior hire.</div>`;
+<div class="note w" style="margin-top:.875rem"><b>Two of these need attention before a term sheet.</b> The equity split implies a post-money of ₹7.14 crore against ₹7.56 crore of projected Year 3 profit — roughly 0.94× Year 3 earnings, which remains favourable to the investor. And no ESOP pool exists, which will matter at the first senior hire. Tranche deployment is not an issue: the fourteen lines total ₹4.83 crore, ₹17 lakh inside the ₹5.00 crore ask.</div>`;
 };
 
 PAGES['investor/closing']=()=>`
@@ -7722,7 +7791,7 @@ REG('unit','Unit economics by channel','The Money',()=>{
 REG('funds','Use of funds','The Money',()=>[
  ['Category','What it buys','Amount (₹)','Tranche','Owner','Expected output'],
  ['Inventory','Phase 1 + Phase 2 + reorders + buffer',5968300,'T1','Product Manager','2,250 units live at launch'],
- ['Marketing','₹12 L a month, ten channel lines',14400000,'T1','Marketing','13,400 customers by Month 12'],
+ ['Marketing','₹12 L a month, seventeen lines',14400000,'T1','Marketing','13,400 customers by Month 12'],
  ['Team','Founder plus six roles',4927000,'T1','Founder','Seven people operating'],
  ['Brand, legal and IP','Registration, trademark, identity',400000,'T1','Founder','Company live and protected'],
  ['Technology','Shopify Advanced plus apps',504000,'T1','Founder','Storefront and CRM running'],
@@ -7891,8 +7960,8 @@ REG('returns','Investor returns','Investor',()=>{const a=A(),f=FIN(),y3=f.gmv[2]
 REG('decisions','Decisions required','Investor',()=>[
  ['Decision','As proposed','Note','Who decides','When'],
  ['Investment amount','₹5 Cr as modelled','Editable in The Money','Founder + Investor','Before term sheet'],
- ['Equity and valuation','70% for ₹5 Cr','Implies ₹7.14 Cr post-money — 1.22× Year 3 profit','Founder + Investor','Before term sheet'],
- ['Tranche structure','₹2.2 / ₹1.8 / ₹1.0 Cr','Deployment totals ₹5.34 Cr against a ₹5.00 Cr ask','Founder + Investor','Before term sheet'],
+ ['Equity and valuation','70% for ₹5 Cr','Implies ₹7.14 Cr post-money — 0.94× Year 3 profit','Founder + Investor','Before term sheet'],
+ ['Tranche structure','₹2.2 / ₹1.8 / ₹1.0 Cr','Deployment totals ₹4.83 Cr against the ₹5.00 Cr ask','Founder + Investor','Before term sheet'],
  ['Board rights','Observer or seat','Not yet agreed','Investor','At term sheet'],
  ['Founder compensation','₹70,000 a month','Below market, reasonable to fix 24 months','Investor','At term sheet'],
  ['ESOP pool','Not created','Typically 8–12% pre-money','Founder + Investor','At term sheet'],
