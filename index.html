@@ -3499,7 +3499,9 @@ ${blkHead('The unit metrics','Year 1')}
   ['Lifetime value, Year 1','₹'+grp(ue.ltv),ue.opc.toFixed(2)+' orders × ₹'+grp(ue.cm2)+' contribution'],
   ['LTV : CAC',(ue.ltv/ue.cac).toFixed(1)+'×','₹'+grp(ue.ltv)+' ÷ ₹'+grp(ue.cac)],
   ['Blended contribution per order','₹'+grp(ue.cmB),'Company-wide — carries the marketplace commission and the '+f.ret[0]+'% return deduction'],
-  ['Break-even',grp(ue.be)+' orders a month','Fixed cost ₹'+grp(Math.round(ue.fixed))+' ÷ ₹'+grp(ue.cmB)+' blended contribution']
+  ['Break-even',grp(ue.be)+' orders a month','Fixed cost ₹'+grp(Math.round(ue.fixed))+' ÷ ₹'+grp(ue.cmB)+' blended contribution'],
+  ['Break-even ROAS',(f.aov[0]/ue.cmB).toFixed(1)+'×','AOV ₹'+grp(Math.round(f.aov[0]))+' ÷ ₹'+grp(ue.cmB)+' blended contribution'],
+  ['Blended ROAS (MER)',(f.gmv[0]/f.op[1].v[0]).toFixed(1)+'×','Gross revenue '+cr(f.gmv[0],2)+' ÷ marketing '+cr(f.op[1].v[0],2)]
  ].map(r=>`<tr><td class="semi">${esc(r[0])}</td>
   <td data-n class="fig">${r[1]}</td>
   <td class="t-label muted">${r[2]}</td></tr>`).join('')}
@@ -3626,6 +3628,11 @@ ${blkHead('Fixed asset register',cr(tot,2)+' total')}
 <div class="note" style="margin-top:.875rem">Depreciation of ₹3.0 L, ₹5.0 L and ₹8.0 L across the three years in the P&L is consistent with this register on a straight-line basis.</div>`};
 
 PAGES['money/breakeven']=()=>{const f=FIN(),u=UNIT('d2c');
+ const vs=i=>f.op.filter(l=>!l.fx).reduce((s,l)=>s+l.v[i],0);
+ const cmB=(f.gp[0]-vs(0))/f.ord[0];                      // blended contribution, Year 1
+ const cmB2=(f.gp[1]-vs(1))/f.ord[1];
+ const fx2=(f.op[0].v[1]+f.op[2].v[1]+f.op[3].v[1]+f.op[9].v[1]+f.op[10].v[1])/12+f.a.mkt2;
+ const o2=Math.ceil(fx2/cmB2);
  const fixedM=(f.op[0].v[0]+f.op[2].v[0]+f.op[3].v[0]+f.op[10].v[0])/12;
  const withMkt=fixedM+f.a.mkt1;
  const B=[['Contribution only','Fixed cost excluding marketing',fixedM],
@@ -3633,23 +3640,23 @@ PAGES['money/breakeven']=()=>{const f=FIN(),u=UNIT('d2c');
   ['Including the store','Year 2 onward, with retail opex',withMkt+600000]];
  return `
 ${blkHead('Break-even, three ways')}
-<div class="g3">${B.map(([n,d,fc])=>{const o=Math.ceil(fc/u.c);
+<div class="g3">${B.map(([n,d,fc])=>{const o=Math.ceil(fc/cmB);
  return `<div class="panel"><div class="p-body">
   <div class="lbl-p faint">${n}</div>
   <div class="t-fig fig" style="margin-top:.375rem">${grp(o)}</div>
   <div class="t-micro faint" style="margin-top:.25rem">orders a month · ${inr(Math.round(o*f.a.aov1))} of GMV</div>
   <p class="t-label muted" style="margin-top:.5rem">${d}</p>
-  <div class="t-micro faint" style="margin-top:.5rem">Fixed cost ${inr(Math.round(fc))} ÷ ₹${grp(Math.round(u.c))} contribution</div>
+  <div class="t-micro faint" style="margin-top:.5rem">Fixed cost ${inr(Math.round(fc))} ÷ ₹${grp(Math.round(cmB))} blended contribution</div>
  </div></div>`}).join('')}</div>
 ${blkHead('Other break-even points')}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Level</th><th>Threshold</th><th>Basis</th></tr></thead>
  <tbody>${[
   ['Single style','28 units sold','₹27,900 exposure ÷ ₹'+grp(Math.round(u.c))+' contribution'],
-  ['Campaign','ROAS above '+(f.a.aov1/u.c).toFixed(1)+'×','AOV ÷ contribution per order'],
+  ['Campaign','ROAS above '+(f.a.aov1/cmB).toFixed(1)+'×','AOV ₹'+grp(f.a.aov1)+' ÷ ₹'+grp(Math.round(cmB))+' blended contribution'],
   ['Bengaluru store','16–22 units a day','₹6 L monthly opex ÷ store contribution'],
   ['Marketplace channel','Positive at any volume','₹'+grp(Math.round(UNIT('myntra').c))+' contribution per order — thin but positive'],
-  ['Company, Year 2','₹1.15 Cr net revenue a month','Full fixed base including retail']
+  ['Company, Year 2',cr(o2*f.a.aov2,2)+' GMV a month',grp(o2)+' orders × ₹'+grp(f.a.aov2)+' — full fixed base including retail']
  ].map(r=>`<tr><td class="semi">${esc(r[0])}</td><td class="fig">${esc(r[1])}</td>
   <td class="t-label muted">${esc(r[2])}</td></tr>`).join('')}
  </tbody></table></div></div>`};
@@ -4524,6 +4531,8 @@ ${blkHead('Production capacity','What ₹1.6 L a month actually delivers')}
 };
 
 PAGES['marketing/performance']=()=>{
+ const fm=FIN(); const vsm=i=>fm.op.filter(l=>!l.fx).reduce((s,l)=>s+l.v[i],0);
+ const roas=i=>(fm.gmv[i]/fm.op[1].v[i]).toFixed(1)+'×', mer=i=>(fm.net[i]/fm.op[1].v[i]).toFixed(1)+'×';
  const F=[['Impression','Reach','—','CPM ₹180–250'],
   ['Engagement','Interest','2–4%','CTR above 1.2%'],
   ['Website visit','Consideration','—','CPC under ₹18'],
@@ -4549,9 +4558,9 @@ ${blkHead('Efficiency over three years')}
  <thead><tr><th>Metric</th><th data-n>Year 1</th><th data-n>Year 2</th><th data-n>Year 3</th><th>What has to happen</th></tr></thead>
  <tbody>${[
   ['Monthly spend','₹12.0 L','₹12.0 L','₹15.0 L','Held flat while revenue triples'],
-  ['Blended CAC','₹720','₹460','₹280','Repeat base absorbs acquisition cost'],
-  ['Net ROAS','3.5×','6.5×','9.0×','Retargeting and repeat carry the ratio'],
-  ['MER — blended','2.6×','5.1×','7.4×','Total revenue ÷ total spend'],
+  ['Blended CAC','₹1,075','₹460','₹280','Year 1 derived: ₹1.44 Cr ÷ 13,400 customers'],
+  ['Net ROAS',roas(0),roas(1),roas(2),'Gross revenue ÷ marketing spend'],
+  ['MER — blended',mer(0),mer(1),mer(2),'Net revenue ÷ marketing spend'],
   ['Marketing as % of net revenue','31%','8%','5%','The whole efficiency story in one line'],
   ['Repeat rate','22%','42%','60%','The assumption everything rests on']
  ].map(r=>`<tr><td class="semi">${esc(r[0])}</td>
@@ -5714,15 +5723,18 @@ ${S.filter(s=>s[0]===at).map(s=>`
 };
 
 PAGES['growth/kpi']=()=>{
+ const fk=FIN(); const vsk=i=>fk.op.filter(l=>!l.fx).reduce((s,l)=>s+l.v[i],0);
+ const cmk=i=>'₹'+grp(Math.round((fk.gp[i]-vsk(i))/fk.ord[i]));
+ const rk=i=>(fk.gmv[i]/fk.op[1].v[i]).toFixed(1)+'×', mk=i=>(fk.net[i]/fk.op[1].v[i]).toFixed(1)+'×';
  const K=[['Gross revenue','₹4.30 Cr','₹12.05 Cr','₹26.64 Cr','Monthly build × 12','Founder'],
   ['Orders','27,592','73,000','1,48,000','Shopify','Founder'],
   ['Conversion rate','1.2%','1.5%','1.8%','GA4','Marketing'],
   ['Average order value','₹1,557','₹1,650','₹1,800','Shopify','Founder'],
-  ['Blended CAC','₹720','₹460','₹280','Spend ÷ new customers','Marketing'],
-  ['Net ROAS','3.5×','6.5×','9.0×','Meta + GA4','Marketing'],
-  ['MER — blended','2.6×','5.1×','7.4×','Revenue ÷ total spend','Founder'],
+  ['Blended CAC','₹1,075','₹460','₹280','Spend ÷ new customers','Marketing'],
+  ['Net ROAS',rk(0),rk(1),rk(2),'Gross revenue ÷ spend','Marketing'],
+  ['MER — blended',mk(0),mk(1),mk(2),'Net revenue ÷ spend','Founder'],
   ['Gross margin','58%','61%','62%','P&L','Founder'],
-  ['Contribution per order','₹903','₹940','₹980','Calculated','Founder'],
+  ['Contribution per order',cmk(0),cmk(1),cmk(2),'Blended, all channels','Founder'],
   ['Repeat customer rate','22%','42%','60%','Klaviyo cohort','Founder'],
   ['Return rate','12%','10%','9%','ReturnPrime','Support'],
   ['RTO rate','Under 8%','Under 7%','Under 6%','Bigship','Operations'],
@@ -7946,8 +7958,8 @@ REG('kpi','KPI targets','Growth',()=>[
  ['Orders',27592,73000,148000,'Shopify','Founder'],
  ['Conversion rate','1.2%','1.5%','1.8%','GA4','Marketing'],
  ['Average order value',1557,1650,1800,'Shopify','Founder'],
- ['Blended CAC',720,460,280,'Spend ÷ new customers','Marketing'],
- ['Net ROAS','3.5','6.5','9.0','Meta + GA4','Marketing'],
+ ['Blended CAC',1075,460,280,'Spend ÷ new customers','Marketing'],
+ ['Net ROAS','3.0','8.4','14.8','Gross revenue ÷ spend','Marketing'],
  ['Gross margin','58%','61%','62%','P&L','Founder'],
  ['Repeat customer rate','22%','42%','60%','Klaviyo cohort','Founder'],
  ['Return rate','12%','10%','9%','ReturnPrime','Support'],
