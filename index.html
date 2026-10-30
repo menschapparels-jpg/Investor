@@ -5130,18 +5130,20 @@ PAGES['ops/inventory']=()=>{
 
  const detail=a=>`<div class="panel"><div class="p-body flush"><table class="t">
   <thead><tr><th>Garment</th><th data-n>Cost</th><th data-n>Landed</th><th data-n>Styles</th>
-   <th data-n>Colours</th><th data-n>SKUs</th><th data-n>Pcs</th><th data-n>Capital</th></tr></thead>
+   <th data-n>Colours</th><th data-n>SKUs</th><th data-n>Pcs/SKU</th><th data-n>Pcs</th><th data-n>Capital</th></tr></thead>
   <tbody>${a.map(r=>`<tr><td class="semi">${esc(r.n)}</td>
    <td data-n class="fig faint">₹${grp(r.c)}</td>
    <td data-n class="fig semi">₹${grp(r.L)}</td>
    <td data-n class="fig">${r.st}</td>
    <td data-n class="fig">${r.co}</td>
    <td data-n class="fig">${r.sku}</td>
+   <td data-n class="fig">${Math.round(r.u/r.sku)}</td>
    <td data-n class="fig">${grp(r.u)}</td>
    <td data-n class="fig semi">₹${grp(r.cap)}</td></tr>`).join('')}
   <tr><td class="semi">Total</td><td data-n></td><td data-n></td>
    <td data-n class="fig semi">${sum(a,'st')}</td><td data-n class="fig semi">${sum(a,'cw')}</td>
-   <td data-n class="fig semi">${grp(sum(a,'sku'))}</td><td data-n class="fig semi">${grp(sum(a,'u'))}</td>
+   <td data-n class="fig semi">${grp(sum(a,'sku'))}</td>
+   <td data-n class="fig semi">${Math.round(sum(a,'u')/sum(a,'sku'))}</td><td data-n class="fig semi">${grp(sum(a,'u'))}</td>
    <td data-n class="fig semi">₹${grp(sum(a,'cap'))}</td></tr>
   </tbody></table></div></div>`;
 
