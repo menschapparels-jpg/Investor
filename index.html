@@ -1284,7 +1284,7 @@ const RIVALS=[
   val:unverified('No disclosed round.','No funding announcement located.'),
   repeat:unverified('Not disclosed.','Company has not reported this figure.'),
   moat:'Distinct resort-wear aesthetic — prints, co-ords and vacation dressing rather than everyday wardrobe.',
-  read:'Overlaps our price band but not our occasion. He buys Banana Club for a holiday and MENSCH for the other fifty weeks.'},
+  read:'Overlaps our price band but not our occasion. They buy Banana Club for a holiday and MENSCH for the other fifty weeks.'},
 
  {k:'powerlook',n:'Powerlook',founded:2010,hq:'Mumbai',pos:'Fast fashion, marketplace-led',age:'18–28',
   rev:fact(123,{tier:'reported',src:'Competitor analysis workbook, Q1 FY26',date:'2026',period:'FY25'}),
@@ -1321,10 +1321,10 @@ const RIVALS=[
 ];
 
 const MKT={
- size:fact(220000,{tier:'media',src:'Competitor analysis workbook, Q1 FY26',date:'Apr 2026',note:'Indian men\'s apparel, ₹ crore.'}),
- cagr:fact('10–12%',{tier:'media',src:'Competitor analysis workbook, Q1 FY26',date:'Apr 2026'}),
+ size:fact(652000,{tier:'media',src:'CMAI × 1Lattice, Indian Apparel Market Size 2025',date:'Oct 2026',note:'Indian adult apparel — menswear US$38.5 Bn plus womenswear US$35.6 Bn. Kidswear excluded. ₹ crore.'}),
+ cagr:fact('8.5–8.9%',{tier:'media',src:'CMAI × 1Lattice, Indian Apparel Market Size 2025',date:'Oct 2026'}),
  brands:fact(57,{tier:'verified',src:'Own market map',date:'Jul 2026'}),
- online:unverified('Online penetration of men\'s apparel not verified.','Needs a credible 2026 industry source.'),
+ online:unverified('Online penetration of Indian apparel not verified.','Needs a credible 2026 industry source.'),
  tier23:unverified('Tier 2/3 share of category not verified.','Needs a credible 2026 industry source.'),
  gcc:unverified('GCC Indian-diaspora apparel spend not verified.','Sourced only from the original deck, which had no citation.')
 };
@@ -1416,8 +1416,8 @@ function gstrip(keys){
 /* per-section tile sets — garment, accent, position, hover label */
 const TILES={
  opportunity:[['shirts','star','tr','The empty band'],['jeans','arrow','tr','Category growth'],
-  ['polos','ring','br','57 brands mapped'],['tshirts','bubble','bl','Who he is'],
-  ['jackets','tag','tl','₹1,699–2,199'],['trousers','badge','br','Why he switches']],
+  ['polos','ring','br','57 brands mapped'],['tshirts','bubble','bl','Who they are'],
+  ['jackets','tag','tl','₹1,699–2,199'],['trousers','badge','br','Why they switch']],
  brand:[['shirts','hanger','br','The range'],['linen','stitch','bl','Construction'],
   ['overshirts','spark','tr','Art direction'],['jackets','card','br','Website & app'],
   ['polos','tag','tl','Packaging'],['trousers','ring','tr','Store design']],
@@ -1556,7 +1556,7 @@ const LOGO={
 
 const TAGLINE={
  primary:'For Whatever Comes Next',
- why:'Forward-looking rather than descriptive. It says the wardrobe is built for what he has not planned yet — the next job, the next city, the next version of himself — which is exactly how a man at 22 to 38 actually buys clothes.',
+ why:'Forward-looking rather than descriptive. It says the wardrobe is built for what they have not planned yet — the next job, the next city, the next version of themselves — which is exactly how someone at 22 to 38 actually buys clothes.',
  alts:[
   ['For Whatever Comes Next','In use. Two readings — fabric and character. Confident without instructing.'],
   ['Cut from character.','More literal on the tailoring. Slightly more formal.'],
@@ -1851,7 +1851,7 @@ PAGES.home=()=>{
   <div>
    <div class="hero-mark lg-loop">${LOGO.lockH({color:'#fff'})}</div>
    <h1 class="hero-h">${esc(TAGLINE.primary)}</h1>
-   <p class="hero-s">MENSCH is being planned as a digitally led, operationally disciplined menswear company — with sourcing, technology, branding and distribution designed before the first order is taken. This is the whole plan, in nine sections.</p>
+   <p class="hero-s">MENSCH is being planned as a digitally led, operationally disciplined fashion company — with sourcing, technology, branding and distribution designed before the first order is taken. This is the whole plan, in nine sections.</p>
    <div class="row wrap" style="margin-top:1.5rem;gap:.5rem">
     <button class="btn btn-primary" data-present="1">▶ Present</button>
     <button class="btn" data-go="opportunity" style="background:transparent;border-color:hsl(30 8% 32%);color:#fff">Start the plan →</button>
@@ -1983,7 +1983,7 @@ const COVERH={opportunity:'The market has been mapped. The gap is real.',
  plan:'What gets built, in what order, and why.',
  money:'Every rupee, traced to an outcome.',
  tech:'The operating layer underneath the brand.',
- marketing:'How he finds us, and why he comes back.',
+ marketing:'How they find us, and why they come back.',
  ops:'Strategy is easy. This is the hard part.',
  growth:'Scale without losing the thing that works.',
  investor:'The case, in full.'};
@@ -2368,15 +2368,15 @@ ${blkHead('The category','Every figure sourced or refused')}
    <div style="margin-top:.375rem">${factBlock(f,fmt,{compact:!isFact(f)?false:true})}</div>
    ${alt&&isFact(f)?`<div class="t-micro faint fig" style="margin-top:.375rem">${alt(f.value)}</div>`:''}</div></div>`).join('')}
 </div>
-<p class="t-micro faint" style="margin-top:.75rem">Indian menswear, stated three ways from one figure: ₹2,20,000 crore. Dollar conversion at ₹88 to the US dollar.</p>
+<p class="t-micro faint" style="margin-top:.75rem">Indian adult apparel, stated three ways from one figure: ₹6,52,000 crore. Dollar conversion at ₹88 to the US dollar.</p>
 
 ${blkHead('What is actually driving it')}
 ${gstrip(['shirts','trousers','jackets','overshirts','jeans','linen','polos','tshirts'])}
 <div class="g2">
- ${[['Category is shifting to branded','Unbranded and local tailoring still hold a large share of Indian menswear. Each point that moves to branded is a point of addressable market — and it is moving.','estimate'],
-    ['Online is where the premium buyer starts','Zara runs 22 stores in India and no e-commerce. Our buyer researches online before he buys anywhere. That is a structural opening, not a trend.','verified'],
+ ${[['Category is shifting to branded','Unbranded and local tailoring still hold a large share of Indian apparel. Each point that moves to branded is a point of addressable market — and it is moving.','estimate'],
+    ['Online is where the premium buyer starts','Zara runs 22 stores in India and no e-commerce. Our buyer researches online before they buy anywhere. That is a structural opening, not a trend.','verified'],
     ['Tier 2 and 3 buy premium now','Marketplace logistics reach the buyer who has income but no access to a flagship. Snitch and Bonkers both scaled on this.','estimate'],
-    ['Social commerce sets the trigger','Instagram is where the decision starts for the 22–38 male buyer. Discovery, proof and purchase now sit on one surface.','estimate']
+    ['Social commerce sets the trigger','Instagram is where the decision starts for the 22–38 buyer. Discovery, proof and purchase now sit on one surface.','estimate']
  ].map(([t,d,tier])=>`<div class="panel"><div class="p-body">
    <div class="row-between"><span class="med" style="font-size:13.5px">${t}</span>
     <span class="src src-${tier}">${TIERS[tier].l}</span></div>
@@ -2386,29 +2386,29 @@ ${gstrip(['shirts','trousers','jackets','overshirts','jeans','linen','polos','ts
 /* ── 01.2 CONSUMER SEGMENTS ───────────────────────────────────────────── */
 const PERSONAS=[
  {img:'shirts',buys:['shirts','trousers','overshirts','jackets'],n:'The Young Professional',tag:'Primary',age:'26–34',loc:'Bengaluru, Mumbai, Delhi NCR',inc:'₹12–35 LPA',
-  beh:'Replaced his college wardrobe two years ago and has been upgrading steadily since. Buys when he needs something, not when there is a drop.',
-  trig:'A new role, a wedding season, a wardrobe gap he has noticed twice',aov:'₹2,200–3,500',
+  beh:'Replaced their college wardrobe two years ago and has been upgrading steadily since. Buys when they need something, not when there is a drop.',
+  trig:'A new role, a wedding season, a wardrobe gap they have noticed twice',aov:'₹2,200–3,500',
   ch:'Instagram → brand website. Checks marketplace reviews before a first purchase.',
   con:'Fit guides, fabric detail, real on-body photography, styling that is not costume',
   prod:'Shirts, trousers, overshirts, one good jacket',
-  gap:'Snitch reads too young at this price. Rare Rabbit reads too expensive. Zara is the default and he knows it is a default.'},
+  gap:'Snitch reads too young at this price. Rare Rabbit reads too expensive. Zara is the default and they know it is a default.'},
  {img:'tshirts',buys:['shirts','tshirts','overshirts','shorts'],n:'The Urban Trend-Seeker',tag:'Primary',age:'22–28',loc:'Metro, Tier 1',inc:'₹6–15 LPA',
   beh:'Follows drops, saves outfits, buys 8–12 times a year at lower ticket. Brand-aware and price-aware simultaneously.',
   trig:'New drop, creator wearing it, a weekend or an occasion',aov:'₹1,400–2,200',
   ch:'Instagram Reels, creator content, marketplace discovery',
   con:'Short-form video, fit on a real body, styling combinations, behind-the-scenes',
   prod:'Shirts, T-shirts, overshirts, shorts',
-  gap:'Wants design credibility without the streetwear graphic. Nothing in the ₹1,700 band speaks to him.'},
+  gap:'Wants design credibility without the streetwear graphic. Nothing in the ₹1,700 band speaks to them.'},
  {img:'jackets',buys:['shirts','jackets','trousers'],n:'The Occasion Buyer',tag:'Secondary',age:'25–38',loc:'Tier 1 and Tier 2',inc:'₹8–25 LPA',
   beh:'Buys against an event. Low frequency, high consideration, high basket. Will pay more to avoid getting it wrong.',
-  trig:'Wedding, festival, work event, a photograph he will keep',aov:'₹3,000–5,000',
+  trig:'Wedding, festival, work event, a photograph they will keep',aov:'₹3,000–5,000',
   ch:'Search, brand website, marketplace with review depth',
   con:'Occasion styling, fabric close-ups, delivery certainty, exchange promise',
   prod:'Premium shirts, co-ord logic, jackets, trousers',
   gap:'Fears the pricing-quality mismatch. Has been burned by a ₹2,000 shirt that felt like ₹800.'},
  {img:'polos',buys:['shirts','tshirts','jeans'],n:'The Emerging-City Aspirational',tag:'Secondary',age:'23–33',loc:'Tier 2 and Tier 3',inc:'₹5–14 LPA',
-  beh:'Has income and taste but no flagship within reach. Marketplace is his entire premium access.',
-  trig:'Marketplace sale event, a creator he trusts, festival',aov:'₹1,300–2,000',
+  beh:'Has income and taste but no flagship within reach. Marketplace is their entire premium access.',
+  trig:'Marketplace sale event, a creator they trust, festival',aov:'₹1,300–2,000',
   ch:'Myntra, Ajio, Amazon. Instagram for discovery, marketplace for trust.',
   con:'Reviews, size charts, COD availability, return clarity',
   prod:'Shirts, T-shirts, jeans',
@@ -2419,21 +2419,21 @@ const PERSONAS=[
   ch:'Instagram, marketplace sale events',
   con:'Trend content, creator collaborations, price-led messaging',
   prod:'T-shirts, casual shirts',
-  gap:'We do not price for him yet. Worth watching, not chasing.'},
+  gap:'We do not price for them yet. Worth watching, not chasing.'},
  {img:'trousers',buys:['shirts','trousers'],n:'The Value-Conscious Shopper',tag:'Watch',age:'24–36',loc:'All tiers',inc:'₹6–18 LPA',
   beh:'Compares three options before every purchase. Reads reviews properly. Loyal once convinced.',
   trig:'Discount, bundle, a demonstrably better cost-per-wear',aov:'₹1,200–1,900',
   ch:'Marketplace, price comparison, brand website during sales',
   con:'Fabric specification, durability proof, cost-per-wear framing',
   prod:'Core shirts, basics',
-  gap:'Our no-deep-discount stance makes him harder to win. We win him on quality evidence or not at all.'},
+  gap:'Our no-deep-discount stance makes them harder to win. We win them on quality evidence or not at all.'},
  {img:'overshirts',buys:['shirts','jackets','linen'],n:'The GCC-Based Indian',tag:'Year 3',age:'27–42',loc:'UAE, Saudi Arabia, Qatar',inc:'High disposable',
   beh:'Strong affinity for Indian brands. Buys on trips home and increasingly cross-border.',
   trig:'India visit, festival, a brand a friend already wears',aov:'₹3,500–6,000',
   ch:'Instagram, cross-border e-commerce, word of mouth',
   con:'Diaspora-relevant styling, shipping certainty, duty clarity',
   prod:'Premium shirts, jackets, occasion wear',
-  gap:'No credible Indian premium D2C menswear brand is present in the market.'}
+  gap:'No credible Indian premium D2C design-led fashion brand is present in the market.'}
 ];
 PAGES['opportunity/segments']=()=>{
  const f=get('personaFilter','all');
@@ -2451,9 +2451,9 @@ PAGES['opportunity/segments']=()=>{
     <div class="t-micro" style="color:hsl(38 10% 68%);margin-top:.25rem">Household income band</div></div>
   </div>
   <p class="t-body" style="margin-top:1rem;max-width:64ch;color:hsl(38 12% 80%)">
-   One buyer, seven ways of arriving at him. He has outgrown looking young and has not started dressing old — that
+   One buyer, seven ways of arriving at them. They dress beyond the obvious rather than along with it — that
    is a life stage, not a birth year, which is why the band is wide and the primary core is narrow. Everything
-   below is a route into the same 22–38 man; the two Primary personas are 26–34 and carry the plan.</p>
+   below is a route into the same 22–38 customer; the two Primary personas are 26–34 and carry the plan.</p>
  </div></div>
 
  ${blkHead('Seven segments',list.length+' shown '+dlmini('personas'))}
@@ -2487,11 +2487,11 @@ PAGES['opportunity/segments']=()=>{
     </div>
    </div>
    <div style="margin-top:1rem">
-    <div class="lbl" style="margin-bottom:.5rem">What he actually puts in the basket</div>
+    <div class="lbl" style="margin-bottom:.5rem">What they actually put in the basket</div>
     ${gstrip(p.buys)}
    </div>
    <div class="panel raised" style="margin-top:.875rem"><div class="p-body" style="padding:.8125rem .9375rem">
-    <div class="lbl" style="color:hsl(var(--accent))">What existing brands get wrong for him</div>
+    <div class="lbl" style="color:hsl(var(--accent))">What existing brands get wrong for them</div>
     <p class="t-label muted" style="margin-top:.375rem;line-height:1.25rem">${esc(p.gap)}</p></div></div>
   </div></div>`).join('')}
  </div>
@@ -2507,9 +2507,9 @@ const PROBS=[
  ['Weak customer service','No reply for two days, then a template. Returns take three weeks.','WhatsApp-first, under 30 minutes in hours, returns processed within 48 hours of receipt.'],
  ['Inaccurate photography','Heavily retouched product that arrives looking different. The single biggest driver of returns.','Real on-body photography, true colour, fabric close-ups. 30 Reels and 60 images shot before launch.'],
  ['Slow delivery','Five to seven days is standard and nobody explains why.','Bigship primary with two backups. Metro 2–3 days, rest of India 4–6, tracked on WhatsApp.'],
- ['Pricing-quality mismatch','A ₹2,000 shirt that feels like ₹800. The reason he defaults to Zara.','₹650 landed on a ₹1,899 shirt, direct from factory. The cost sits in the garment, not the margin stack.'],
+ ['Pricing-quality mismatch','A ₹2,000 shirt that feels like ₹800. The reason they default to Zara.','₹650 landed on a ₹1,899 shirt, direct from factory. The cost sits in the garment, not the margin stack.'],
  ['Poor exchange experience','Exchange means return, refund, reorder, and hope the size is in stock.','Prepaid pickup, 7-day window, size guidance built into the product page to prevent it happening.'],
- ['No brand personality','Product with a logo on it. Nothing to belong to.','A defined position — masculine confidence — with a voice and a visual system built around it.']
+ ['No brand personality','Product with a logo on it. Nothing to belong to.','A defined position — considered individuality — with a voice and a visual system built around it.']
 ];
 PAGES['opportunity/problem']=()=>`
 ${blkHead('Ten problems','Each mapped to our answer')}
@@ -2553,14 +2553,14 @@ ${blkHead('Why it stays empty')}
   <p class="t-label muted" style="margin-top:.4375rem;line-height:1.2rem">${d}</p></div></div>`).join('')}
 </div>
 
-${blkHead('Why he switches')}
+${blkHead('Why they switch')}
 <div class="g3">
- ${[['Fit he can trust','One block, one grading standard, measured against tolerance on every lot.'],
+ ${[['Fit they can trust','One block, one grading standard, measured against tolerance on every lot.'],
     ['Cost that shows','₹650 of garment in a ₹1,899 shirt. Direct factory, no wholesaler margin stacked in.'],
-    ['A brand with a position','Masculine confidence, consistently expressed. Not product with a logo on it.'],
+    ['A brand with a position','Considered individuality, consistently expressed. Not product with a logo on it.'],
     ['Service that closes the loop','WhatsApp in 30 minutes. Prepaid exchange. Returns processed in 48 hours.'],
-    ['Photography that tells the truth','What arrives is what he saw. The cheapest way to cut returns from 12% to 9%.'],
-    ['Availability where he already is','D2C for margin, marketplace for discovery, one store for trust.']
+    ['Photography that tells the truth','What arrives is what they saw. The cheapest way to cut returns from 12% to 9%.'],
+    ['Availability where they already are','D2C for margin, marketplace for discovery, one store for trust.']
  ].map(([t,d])=>`<div class="panel"><div class="p-body">
   <div class="med" style="font-size:13.5px">${t}</div>
   <p class="t-label muted" style="margin-top:.375rem;line-height:1.2rem">${d}</p></div></div>`).join('')}
@@ -2592,16 +2592,16 @@ PAGES['brand/positioning']=()=>`
 <div class="panel ink"><div class="p-body" style="padding:1.75rem">
  <div class="caps" style="color:hsl(var(--accent))">Positioning statement</div>
  <p class="ed" style="font-size:1.75rem;line-height:2.15rem;margin-top:.625rem;max-width:32ch">
-  For the man who has outgrown looking young but has not started dressing old.</p>
+  A modern fashion label for the ones who like to do things differently.</p>
  <p class="t-body" style="margin-top:.875rem;max-width:58ch;color:hsl(38 12% 80%)">
-  MENSCH makes considered menswear at ₹1,699–2,199 — premium design and construction at a price he will repeat, from a brand with a point of view rather than a logo.</p>
+  MENSCH makes considered fashion at ₹1,699–2,199 — premium design and construction at a price they will repeat, from a brand with a point of view rather than a logo.</p>
 </div></div>
 
 ${blkHead('The frame')}
 <div class="g2">
- ${[['Purpose','To make a man feel he was taken seriously before he said anything.'],
-    ['Vision','India\'s most trusted premium-affordable menswear brand within five years.'],
-    ['Mission','Design-led menswear, sourced direct, priced honestly, serviced properly.'],
+ ${[['Purpose','To make everyday clothing more considered through thoughtful design, versatile silhouettes and distinctive details.'],
+    ['Vision','To become India\'s most trusted design-led fashion brand.'],
+    ['Mission','To make design-led fashion accessible through a direct-to-customer approach.'],
     ['Promise','What you saw is what arrives. It fits, it lasts, and if it does not, we fix it in 48 hours.']
  ].map(([a,b])=>`<div class="panel"><div class="p-body">
   <div class="lbl">${a}</div><p class="t-lead" style="margin-top:.375rem">${esc(b)}</p></div></div>`).join('')}
@@ -2615,7 +2615,7 @@ ${blkHead('Brand pillars','Every decision traces to one of these')}
 <div class="g3">
  ${[['Style','Design that reads considered, never costume. The cut does the work.'],
     ['Substance','₹650 of garment in a ₹1,899 shirt. The cost is in the product.'],
-    ['Confidence','Quiet, not loud. He does not need the brand to announce him.'],
+    ['Confidence','Quiet, not loud. They do not need the brand to announce them.'],
     ['Quality','One block, one grading standard, fourteen QC checkpoints.'],
     ['Accessibility','Premium construction at a price a professional repeats four times a year.'],
     ['Integrity','What the photograph shows is what the box contains.']
@@ -2644,7 +2644,7 @@ ${blkHead('What we are, and are not')}
 ${blkHead('Tone of voice')}
 <div class="g2">
  ${[['Say','"Made direct. No middleman. That is why it costs what it costs."','pos'],
-    ['Not','"Revolutionising menswear through disruptive supply-chain innovation."','neg'],
+    ['Not','"Revolutionising fashion through disruptive supply-chain innovation."','neg'],
     ['Say','"Cut from one block, graded to one standard. A medium stays a medium."','pos'],
     ['Not','"Experience unparalleled comfort and premium craftsmanship."','neg']
  ].map(([k,v,c])=>`<div class="panel"><div class="p-body">
@@ -2706,7 +2706,7 @@ PAGES['brand/identity']=()=>{
   <div class="panel"><div class="p-head"><h3>Never</h3></div><div class="p-body stack-s">
    ${['Heavy retouching that changes the garment','Saturated or graded colour that misrepresents fabric',
       'Busy locations that compete with the product','Stock imagery of any kind',
-      'Flat-lay only — he needs to see it worn','Props that date the image'].map(x=>
+      'Flat-lay only — they need to see it worn','Props that date the image'].map(x=>
     `<div class="row" style="align-items:flex-start;gap:.5rem"><span class="neg t-label" style="flex:none">✕</span>
      <span class="t-label muted">${x}</span></div>`).join('')}
   </div></div>
@@ -2820,7 +2820,7 @@ BUILT['brand/positioning']=BUILT['brand/identity']=BUILT['brand/apparel']=BUILT[
 
 /* ═══ PACKAGING · WEB · STORE · CATALOGUE · GUIDELINES ═══════════════════ */
 const PACK=[
- ['Rigid box','₹55','Matte board, wordmark debossed, no print inside','The box he keeps. Reused, photographed, seen again'],
+ ['Rigid box','₹55','Matte board, wordmark debossed, no print inside','The box they keep. Reused, photographed, seen again'],
  ['Inner tissue','incl.','Unbranded acid-free, single fold','Stops the garment moving and reads considered'],
  ['Shirt insert','incl.','Recycled board collar support','Shirt arrives with the collar standing, not crushed'],
  ['Brand sticker','incl.','Wordmark seal across the tissue','One deliberate moment of resistance before the reveal'],
@@ -2939,8 +2939,8 @@ PAGES['brand/web']=()=>{
       ['Proof strip','Free delivery, 7-day exchange, direct from factory.']],
      plp:[['Filters above the fold','Size, colour, price, sort. Sticky on scroll.'],
       ['Four across on desktop, two on mobile','Density without crowding.'],
-      ['Price and range on the card','No hover-to-reveal. He is deciding, not browsing.'],
-      ['Style count visible','Tells him the range is real.']],
+      ['Price and range on the card','No hover-to-reveal. They are deciding, not browsing.'],
+      ['Style count visible','Tells them the range is real.']],
      pdp:[['Gallery with six shots','Front, back, detail, fabric, model, alternate.'],
       ['Size ladder with a guide beside it','The single biggest lever on returns.'],
       ['Sticky add-to-bag on mobile','Price and size always visible.'],
@@ -3848,7 +3848,7 @@ ${blkHead('Where the price goes','Live, from the inputs')}
  <div class="note" style="margin-top:1rem">
   ${cm>0?`On these inputs a ₹${grp(Math.round(sp))} shirt returns <b>₹${grp(Math.round(cm))} of contribution</b>, or ${cmPc.toFixed(1)}% of net revenue.
    That is the ceiling on what one order can pay to acquire itself: spend more than ₹${grp(Math.round(maxCac))} winning the customer and the order loses money.
-   At a blended CAC of ₹720 in Year 1 the first order clears by ₹${grp(Math.round(cm-720))} — <b>which is why the model only works if he buys again.</b>`
+   At a blended CAC of ₹720 in Year 1 the first order clears by ₹${grp(Math.round(cm-720))} — <b>which is why the model only works if they buy again.</b>`
    :`<b>These inputs do not work.</b> Contribution is ₹${grp(Math.round(cm))} — the order costs more to fulfil than it earns, before a rupee of marketing. Raise the price, cut the landed cost, or drop the discount.`}
  </div>
 </div></div>
@@ -3907,7 +3907,7 @@ ${blkHead('City scorecard','Scored 1–10 against four criteria')}
   <span class="badge">Max 40</span></div>
  <div class="p-body">
   <div class="g4">
-   ${[['Buyer density','How many 22–38 men in our income band live within a 30-minute drive of a premium mall corridor.','10 = Bengaluru or Mumbai scale','1–10'],
+   ${[['Buyer density','How many 22–38 buyers in our income band live within a 30-minute drive of a premium mall corridor.','10 = Bengaluru or Mumbai scale','1–10'],
       ['Spend','Average premium apparel basket in the city, from our own marketplace pin-code data and category benchmarks.','10 = Mumbai','1–10'],
       ['Rent advantage','Rent per square foot against the revenue per square foot the format needs. Higher score means cheaper to trade.','10 = Bengaluru','1–10'],
       ['Fit','How closely the city\'s buying pattern matches our positioning — design-led, frequent newness, repeat.','10 = home market','1–10']
@@ -4267,7 +4267,7 @@ ${blkHead('The size–colour matrix')}
  <div class="panel"><div class="p-head"><h3>Depth per style</h3></div><div class="p-body">
   ${TBL(['Size','Share of buy','On 100 units'],[['S','12%','12'],['M','26%','26'],['L','30%','30'],
     ['XL','22%','22'],['XXL','10%','10']],{left:1})}
-  <p class="t-micro faint" style="margin-top:.5rem">Standard Indian menswear size curve. Refine against actual sell-through from Month 3.</p>
+  <p class="t-micro faint" style="margin-top:.5rem">Standard Indian size curve. Refine against actual sell-through from Month 3.</p>
  </div></div>
  <div class="panel"><div class="p-head"><h3>Multi-location from Year 2</h3></div><div class="p-body stack-s">
   ${[['Warehouse','Master stock, fulfils D2C and marketplace'],
@@ -4338,7 +4338,7 @@ ${blkHead('Nine use cases','Input, output, who checks it, what can go wrong')}
 <div class="note" style="margin-top:.875rem"><b>Nothing here runs unsupervised.</b> Every use case has a human approving the output before it reaches a customer or commits money. The value is in drafting speed and pattern-spotting, not in autonomy — and a plan that claims otherwise at this scale is not credible.</div>
 ${blkHead('What we are not doing')}
 <div class="g3">
- ${[['No AI-generated product photography','A customer who receives something different from what he saw returns it. Photography stays real.'],
+ ${[['No AI-generated product photography','A customer who receives something different from what they saw returns it. Photography stays real.'],
     ['No autonomous pricing','Discounting is a brand decision. It does not get delegated to a model.'],
     ['No AI customer service without review','A wrong size answer costs a return, a refund and the relationship.']
  ].map(([t,d])=>`<div class="panel"><div class="p-body">
@@ -4421,11 +4421,11 @@ ${blkHead('Where the money goes','₹'+grp(BTOT)+' a month itemised')}
 </div>
 ${blkHead('The strategy in one line each')}
 <div class="g2">
- ${[['Paid finds him','Meta and Google carry the first purchase. That is what the ₹3.8 L a month buys — not brand awareness, transactions.'],
+ ${[['Paid finds them','Meta and Google carry the first purchase. That is what the ₹3.8 L a month buys — not brand awareness, transactions.'],
     ['Creators prove it','A brand nobody has worn is a risk. 20 creators a month wearing it is the proof that closes the sale.'],
     ['Content is the asset','₹1.6 L a month of production makes everything else work. Bad creative makes good targeting expensive.'],
     ['Retention is the business','30% of budget goes to keeping customers, not finding them. Every point of repeat rate cuts effective CAC by ₹16.'],
-    ['Marketplace is discovery','We pay 22% to be found. Then we move him to our own site where the same order is worth ₹391 more.'],
+    ['Marketplace is discovery','We pay 22% to be found. Then we move them to our own site where the same order is worth ₹391 more.'],
     ['The store is media','A physical space is a permanent set. It pays for content we would otherwise buy twelve times a year.']
  ].map(([t,d])=>`<div class="panel"><div class="p-body">
   <div class="semi" style="font-size:13.5px">${t}</div>
@@ -4594,10 +4594,10 @@ ${blkHead('Five tiers, two funded')}
 ${blkHead('How a collaboration is judged')}
 <div class="g2">
  <div class="panel"><div class="p-head"><h3>Before</h3></div><div class="p-body stack-s">
-  ${[['Brand fit','Does his existing content look like our customer? If not, reach is irrelevant.'],
+  ${[['Brand fit','Does their existing content look like our customer? If not, reach is irrelevant.'],
      ['Engagement quality','Comments from real accounts, not emoji from bot farms.'],
      ['Audience geography','Tier 1–2 India. A creator with a global following is worth less to us.'],
-     ['Usage rights','Negotiated up front. We need the content for paid, not just his grid.']].map(([t,d])=>
+     ['Usage rights','Negotiated up front. We need the content for paid, not just their grid.']].map(([t,d])=>
    `<div><div class="t-label semi">${t}</div><p class="t-micro faint" style="margin-top:.125rem;line-height:1rem">${d}</p></div>`).join('')}
  </div></div>
  <div class="panel"><div class="p-head"><h3>After</h3></div><div class="p-body stack-s">
@@ -4651,7 +4651,7 @@ ${blkHead('Where organic actually pays')}
  <thead><tr><th>Area</th><th>What it covers</th><th>Effort</th><th>When it pays</th></tr></thead>
  <tbody>${[
   ['Technical','Schema, sitemap, canonical, page speed, mobile','One-time at build','Immediately — it gates everything else'],
-  ['Category pages','"Premium shirts for men", "linen shirts India"','Ongoing copy','Month 6–12'],
+  ['Category pages','"Premium cotton shirts", "linen shirts India"','Ongoing copy','Month 6–12'],
   ['Product pages','Unique descriptions, fabric detail, size data','Per SKU','Month 3+'],
   ['Style guides','"How to wear an overshirt", fit guides','2 per month','Month 9–18'],
   ['Brand search','Defending "MENSCH" and misspellings','Paid, not organic','Day one'],
@@ -5205,7 +5205,7 @@ ${blkHead('The range','Colour × size = one SKU')}
  </tbody></table></div></div>
 <div class="note" style="margin-top:.875rem">Shirts and bottoms carry <b>${
   ALL.filter(r=>r.grp==='Shirts'||r.grp==='Bottoms').reduce((t,r)=>t+r.st,0)} of the ${sum(ALL,'st')} styles</b>
- — the two categories a menswear customer returns for. Everything else is supporting range.</div>
+ — the two categories a fashion customer returns for. Everything else is supporting range.</div>
 
 ${blkHead('The range, drawn','24 garment types')}
 ${gallery(ALL)}
@@ -6005,11 +6005,11 @@ function PRES(){const f=FIN(),a=A();return [
  {e:'The insight',h:'The fastest-growing brand in the category is barely profitable.',
   s:'Snitch grew 80% at 2–3% EBITDA. Bonkers grew 46% at 11%. Growth and profit are two different stories here, and we are building for the second one.',
   f:[['2.5%','Snitch EBITDA'],['11%','Bonkers EBITDA'],['29%','Mufti — best in category']],go:'opportunity/rivals'},
- {dk:1,e:'The brand',h:'For the man who has outgrown looking young but has not started dressing old.',
-  s:'Premium design and construction at a price he will repeat, from a brand with a point of view rather than a logo.',
+ {dk:1,e:'The brand',h:'For the ones who like to do things differently.',
+  s:'Premium design and construction at a price they will repeat, from a brand with a point of view rather than a logo.',
   f:[['22–38','Target age'],['₹6–40 L','Income band'],['Confidence','The territory']],go:'brand/positioning'},
  {e:'The product',h:'Twelve categories. 88 styles. 5,602 units.',
-  s:'The shirt leads — India\'s highest-frequency fashion repurchase and the clearest quality signal at ₹1,899. A man who trusts the shirt buys the jacket without asking.',
+  s:'The shirt leads — India\'s highest-frequency fashion repurchase and the clearest quality signal at ₹1,899. Someone who trusts the shirt buys the jacket without asking.',
   f:[['25','Styles in Phase 1'],['1,575','Units'],['₹65,000','Max exposure per style']],go:'brand/collection'},
  {e:'Unit economics',h:'₹650 in. ₹1,159 out.',
   s:'Direct to factory in Tirupur and Bengaluru with no wholesaler. Every component costed — including the 2% defect allowance and the inward freight most plans forget.',
@@ -6157,7 +6157,7 @@ ${blkHead('The mark','The bison — final, approved')}
       ['Three triangles','The forelock, reduced to its simplest possible reading. It is the one detail that makes the mark memorable at a glance.'],
       ['Horns carry the weight','Wide enough to give the mark a silhouette you recognise before you see the detail.'],
       ['Holds to 24px','Tested down to a woven label and an app icon. Below 24mm the horns close up, so that is the floor.'],
-      ['Not gendered','An animal, not a figure. It reads the same on menswear now and on womenswear later.']
+      ['Not gendered','An animal, not a figure. It reads the same across the whole range, for anyone who wears it.']
    ].map(([t,d])=>`<div><div class="t-label semi">${esc(t)}</div>
      <p class="t-micro faint" style="margin-top:.125rem;line-height:1rem">${esc(d)}</p></div>`).join('')}
   </div></div></div>
@@ -6424,7 +6424,7 @@ ${blkHead('The artefacts','Drawn to the mark and the palette')}
 ${blkHead('Cost',"₹71 of the ₹650 landed cost")}
 <div class="panel"><div class="p-body flush"><table class="t">
  <thead><tr><th>Component</th><th data-n>Cost</th><th>Specification</th><th>Why it earns its place</th></tr></thead>
- <tbody>${[['Rigid box','₹55','Charcoal board, brass foil, magnetic','The box he keeps. Reused, photographed, seen again'],
+ <tbody>${[['Rigid box','₹55','Charcoal board, brass foil, magnetic','The box they keep. Reused, photographed, seen again'],
   ['Hang tag + woven label','₹10','400 GSM board, woven neck label','Where quality is judged before the garment is worn'],
   ['Polybag + barcode','₹6','Recycled LDPE, printed','Regulatory and pick accuracy'],
   ['Tissue, insert, care card','incl.','Acid-free, letterpress','The pause before the reveal']]
@@ -6495,7 +6495,7 @@ home:()=>`<div class="mkw">
    `<div class="card"><div class="im"><img decoding="async" src="${P_(k)}" alt=""></div>
     <div class="nm">${n}</div><div class="pr">₹${grp(p)}</div></div>`).join('')}</div></div>
  <div class="mkw-band">${MK({s:30,c:'#F4F1EB'})}
-  <div class="h2" style="font-family:'Georgia Pro Condensed','Georgia Pro',Georgia,serif;font-weight:400;font-size:26px;letter-spacing:-.01em">A man of character.<br>Dressed like one.</div>
+  <div class="h2" style="font-family:'Georgia Pro Condensed','Georgia Pro',Georgia,serif;font-weight:400;font-size:26px;letter-spacing:-.01em">A person of character.<br>Dressed like one.</div>
   <p>Mensch is a German word for someone with substance. We named the brand after the compliment, then built the product to earn it.</p></div>
  <div class="mkw-sec"><div class="sh">Shop by category</div>
   <div class="g3">${['shirts','trousers','jackets'].map(k=>
@@ -6611,7 +6611,7 @@ home:()=>`<div class="mka">${abar()}
  <div class="a-sec"><div class="sh">New in</div><div class="g2">
   ${RS.slice(0,6).map(([n,k,p])=>`<div class="card"><div class="im"><img decoding="async" src="${P_(k)}" alt=""></div>
    <div class="nm">${n}</div><div class="pr">₹${grp(p)}</div></div>`).join('')}</div></div>
- <div class="a-band">${MK({s:26,c:'#F4F1EB'})}<div class="h2">A man of character.</div></div>
+ <div class="a-band">${MK({s:26,c:'#F4F1EB'})}<div class="h2">A person of character.</div></div>
  <div class="a-sec"><div class="sh">Categories</div><div class="g2">
   ${['trousers','jackets','jeans','hoodies'].map(k=>
    `<div class="tile"><img decoding="async" src="${P_(k)}" alt=""><span>${k}</span></div>`).join('')}</div></div>
@@ -6994,7 +6994,7 @@ ${blkHead('Art direction')}
 <div class="g3">
  ${[['One light source','Natural, side-on, soft shadow. No fill, no ring light. The shadow is what gives the fabric weight.'],
     ['Concrete and plaster grounds','The store palette. Nothing that competes with the garment.'],
-    ['Real proportion','On body, no extreme retouching. What arrives is what he saw — the cheapest return-rate lever we have.'],
+    ['Real proportion','On body, no extreme retouching. What arrives is what they saw — the cheapest return-rate lever we have.'],
     ['Fabric at 1:1','One close-up per style at actual size so the weave reads on a phone.'],
     ['Monochrome alternation','Every third frame desaturated. Holds the grid together when eight garments have eight colours.'],
     ['Mark on every frame','Bottom-left at 20px. Consistent placement across web, social and print.']
@@ -7045,7 +7045,7 @@ ${st?`
 
 const ST_ZONES=[
  {k:'window',n:'Window & façade',a:'18%',d:'Full-height glazing on blackened mullions. Halo-lit wordmark on charcoal, projecting blade sign carrying the monogram.'},
- {k:'entry',n:'Entry & central bench',a:'12%',d:'One low steel bench on a wool rug, folded stock on two levels. The current drop, first thing he touches.'},
+ {k:'entry',n:'Entry & central bench',a:'12%',d:'One low steel bench on a wool rug, folded stock on two levels. The current drop, first thing they touch.'},
  {k:'left',n:'Left wall — shirts',a:'20%',d:'Rail at 6.5 ft with shelving above and below. The longest run in the store, facing the entrance.'},
  {k:'right',n:'Right wall — bottoms & layering',a:'14%',d:'Rail plus folded shelving. Heavier product at waist height, jackets on wider-gauge hangers above.'},
  {k:'feature',n:'Feature wall & reception',a:'12%',d:'Lit charcoal volume carrying the monogram and wordmark, with the counter set in front of it. The view from the street.'},
@@ -7406,7 +7406,7 @@ function buildStore(R){
  frame(W-.7,7.6,-9,'x');
 
  /* ── centre: bench on a rug ──────────────────────────────────────────*/
- const mB=meta('Central bench','One steel-frame bench on a wool rug. Two levels of folded stock — the current drop on top, backup beneath. The first thing he touches.');
+ const mB=meta('Central bench','One steel-frame bench on a wool rug. Two levels of folded stock — the current drop on top, backup beneath. The first thing they touch.');
  R.ground(17,12,0,.05,-8,C3.rug,3,2,mB,1.5);
  R.box(12,.3,3.6,0,2.6,-8,C3.oak,mB);
  R.box(11.6,.26,3.3,0,1.25,-8,C3.oak,mB);
